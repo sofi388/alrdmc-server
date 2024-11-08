@@ -7,7 +7,7 @@ from get_vectors import fetch_all_vectors, fetch_all_titles
 from config.config import PORT
 from config.openapi_config import semantic_vector_tag, semantic_vector_summary, \
                             info, SemanticVectorObject
-from semanticize import generate_semantic_vector
+from db_logic.semanticize import generate_semantic_vector
 from db_logic.poller import poller
 
 logger = logging.getLogger("flask.app")

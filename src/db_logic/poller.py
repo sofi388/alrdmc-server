@@ -71,15 +71,6 @@ def periodic_poller(logger):
         time.sleep(POLLING_INTERVAL)
         logger.info(f"scraping initiatives")
         data = scrape_all()
-
-        titles = []
-        urls = []
-        for item in data:
-            titles.append(item['title'])
-            urls.append(item['url'])
-        
-        save_to_mysql(titles, urls)
-
         logger.info(f"got {len(data)} initiatives, pushing to db")
         # push to db
-"""
+        
