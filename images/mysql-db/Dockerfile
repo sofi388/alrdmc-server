@@ -1,6 +1,6 @@
 FROM mysql:latest
 
-COPY ./my.cnf /etc/mysql/conf.d/my.cnf
+COPY images/mysql-db/my.cnf /etc/mysql/conf.d/my.cnf
 
 ENV MYSQL_ROOT_PASSWORD=pass
 
