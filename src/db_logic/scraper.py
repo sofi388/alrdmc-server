@@ -1,5 +1,7 @@
 import requests
-from config.config import EU_URL
+# from src.config.config import EU_URL
+
+EU_URL = "https://register.eci.ec.europa.eu/core/api/register/search/ALL/EN/0/20"
 
 def fetch_european_initiatives(url: str):
     response = requests.get(EU_URL)
@@ -21,9 +23,9 @@ def fetch_european_initiatives(url: str):
     return return_data
 
 def scrape_all():
-    data = fetch_european_initiatives(url)
+    data = fetch_european_initiatives()
     return data
 
 if __name__ == "__main__":
-    data = fetch_european_initiatives(url)
+    data = fetch_european_initiatives(EU_URL)
     print(data)

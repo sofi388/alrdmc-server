@@ -28,17 +28,17 @@ def fetch_objective_from_url(url: str):
             return objective_text
         else:
             print("Objective text not found")
-            return None
+            return " "
     except Exception as e:
         print(f"Error extracting objective: {e}")
-        return None
+        return " "
     finally:
         # Close the browser window
         driver.quit()
 
 # Example of how to use the function:
-url = "https://eci.ec.europa.eu/045/public/#/screen/home"
-# url = "https://eci.ec.europa.eu/047/public/?lg=en"
+# url = "https://eci.ec.europa.eu/035/public/?lg=en"
+url = "https://eci.ec.europa.eu/047/public/?lg=en"
 objective_text = fetch_objective_from_url(url)
 
 if objective_text:
