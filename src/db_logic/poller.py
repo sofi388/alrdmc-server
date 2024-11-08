@@ -36,17 +36,17 @@ def save_initiatives_to_db(titles, urls, vectors):
     connection.close()
 
 
-def poller():
+def poller(logger):
     data = scrape_all()
 
     titles = []
     urls = []
     vectors = []
-
+    logger.info(f"starting to poll")
     for item in data:
         titles.append(item['title'])
         urls.append(item['url'])
-        vectors.append(json.dumps(generate_semantic_vector(item['title']).tolist()))
+        vectors.append(json.dumps(generate_semantic_vector(item['title'])))
 
     save_initiatives_to_db(titles, urls, vectors)
 

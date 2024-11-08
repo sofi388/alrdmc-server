@@ -1,18 +1,18 @@
 import flask
 import threading
 from flask_openapi3 import OpenAPI
-from flask import logging
+import logging
 
 from config.config import PORT
 from config.openapi_config import semantic_vector_tag, semantic_vector_summary, \
                             info, SemanticVectorObject
 from semanticize import generate_semantic_vector
-from poller import periodic_poller
+from db_logic.poller import poller
 
 logger = logging.getLogger("flask.app")
 
-poller = threading.Thread(target=periodic_poller, args=(logger,))
-thread.start()
+poller = threading.Thread(target=poller, args=(logger,))
+poller.start()
 
 app = OpenAPI(__name__, info=info)
 @app.get("/semantic_vectors", summary=semantic_vector_summary, tags=[semantic_vector_tag])
@@ -23,6 +23,7 @@ def get_semantic_vectors():
     """
     logger.info(f"fetching semantic vectors from DB")
     ### DB query logic here
+    
     semantic_vector_objects = [SemanticVectorObject(
         semantic_vector=generate_semantic_vector("lol"),
         semantic_vector_url="https://social.mtdv.me/articles/initiative"
