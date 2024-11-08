@@ -11,6 +11,8 @@ Flask = "^3.0.3"
 flask-openapi3 = "^4.0.1"
 transformers = "^4.46.2"
 pydantic = "^2.9.2"
+torch = "^2.5.1"
+mysql-connector-python = "^9.1.0"
 
 
 [build-system]
