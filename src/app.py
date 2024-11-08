@@ -3,7 +3,7 @@ from flask_openapi3 import OpenAPI
 
 from config import PORT
 from openapi_config import semantic_vector_tag, semantic_vector_summary, \
-                            info
+                            info, SemanticVectorObject
 
 app = OpenAPI(__name__, info=info)
 
@@ -15,13 +15,14 @@ def get_semantic_vectors():
     """
 
     ### DB query logic here
-    semantic_vector_list = [
-        [0.0,0.1,0.2,0.4,1.1],
-        [0.0,0.1,0.2,0.4,1.1]
+    semantic_vector_objects = [SemanticVectorObject(
+        semantic_vector=[i/768 for i in range(768)],
+        semantic_vector_url="https://social.mtdv.me/articles/initiative"
+    )
     ]
     ### make semantic_vector_list contain all semantic vectors
 
-    return flask.jsonify(semantic_vector_list)
+    return flask.jsonify([ semantic_vector_object.__dict__ for semantic_vector_object in semantic_vector_objects])
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=PORT)
