@@ -20,7 +20,10 @@ def fetch_european_initiatives(url: str):
         return_data.append(initiative_object)
 
     return return_data
-    
+
+def scrape_all():
+    data = fetch_european_initiatives(url)
+    return data
 
 if __name__ == "__main__":
     data = fetch_european_initiatives(url)
