@@ -1,8 +1,8 @@
 from config.config import POLLING_INTERVAL
 from scraper import scrape_all
 from semanticize import generate_semantic_vector
+from scraper_objectives import fetch_objective_from_url
 import mysql.connector
-import time
 import json
 import logging
 
