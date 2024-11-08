@@ -1,12 +1,12 @@
 import mysql.connector
 import numpy as np
 import json
-from generate_semantic_vector import generate_semantic_vector
+from semanticize import generate_semantic_vector
 
 
-def save_to_mysql(text: str, vector: list):
+def save_vectors_to_db(vector: list):
     """
-    Saves the text and semantic vector to MySQL database
+    Saves the text and semantic vector to MySQL database, test function
     """
     connection = mysql.connector.connect(
         host="34.70.118.142",
@@ -21,8 +21,8 @@ def save_to_mysql(text: str, vector: list):
     # Convert the vector to a JSON string or BLOB. Don't know how to VECTOR
     vector_json = json.dumps(vector)
     
-    query = "INSERT INTO semantic_vectors_test (vector_text, vector_data) VALUES (%s, %s)"
-    cursor.execute(query, (text, vector_json))
+    query = "INSERT INTO initiatives (vector_data) VALUES (%s)"
+    cursor.execute(query, (vector_json))
     
     connection.commit()
     
@@ -34,8 +34,8 @@ if __name__ == "__main__":
     text = "Hello, how are you?"
     vector = generate_semantic_vector(text)
     
-    tensor_list = vector.tolist()
+    vector_list = vector.tolist()
 
     # Save the text and vector to MySQL
-    save_to_mysql(text, tensor_list)
+    save_vectors_to_db(text, vector_list)
     print("Data saved to MySQL.")

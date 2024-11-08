@@ -17,6 +17,8 @@ def fetch_european_initiatives(url: str):
             "url": initiative["supportLink"],
         }
 
+        
+
         return_data.append(initiative_object)
 
     return return_data
