@@ -5,6 +5,7 @@ This application seeks to provide a low-barrier to entry solution to digital acc
 
 ### Pre-requisites
 - [Python](https://www.python.org/downloads/)
+- [Poetry](https://python-poetry.org/)
 - [Docker](https://docs.docker.com/engine/install/ubuntu/)
 
 ### How to run the project

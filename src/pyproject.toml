@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "alrdmc"
+version = "0.1.0"
+description = "Contains dependencies needed to run the alrdmc server-side application."
+authors = ["Miika Matias <miikapiiparinen24@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+Flask = "^3.0.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
