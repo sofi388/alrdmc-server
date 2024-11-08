@@ -4,6 +4,7 @@ from flask_openapi3 import OpenAPI
 from config import PORT
 from openapi_config import semantic_vector_tag, semantic_vector_summary, \
                             info, SemanticVectorObject
+from semanticize import generate_semantic_vector
 
 app = OpenAPI(__name__, info=info)
 
@@ -16,7 +17,7 @@ def get_semantic_vectors():
 
     ### DB query logic here
     semantic_vector_objects = [SemanticVectorObject(
-        semantic_vector=[i/768 for i in range(768)],
+        semantic_vector=generate_semantic_vector("lol"),
         semantic_vector_url="https://social.mtdv.me/articles/initiative"
     )
     ]
