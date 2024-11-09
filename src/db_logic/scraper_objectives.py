@@ -3,11 +3,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
+from config.config import GOOGLE_DRIVER_LOC
+
 def fetch_objective_from_url(url: str):
     options = webdriver.ChromeOptions()
+    options.binary_location = GOOGLE_DRIVER_LOC
     options.headless = True
-    options.add_argument('--no-sandbox')
-    options.add_argument('--disable-dev-shm-usage')
 
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     driver.get(url)
@@ -30,6 +31,7 @@ def fetch_objective_from_url(url: str):
 
 def fetch_kansalaisaloite_lists_from_url(url: str):
     options = webdriver.ChromeOptions()
+    options.binary_location = GOOGLE_DRIVER_LOC
     options.headless = True
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')

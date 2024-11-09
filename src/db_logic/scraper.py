@@ -1,12 +1,12 @@
 import requests
-# from config.config import EU_URL, KANSALAISALOITE_URL
-
-EU_URL =  "https://register.eci.ec.europa.eu/core/api/register/search/ALL/EN/0/20"
+from config.config import EU_URL, KANSALAISALOITE_URL
+from db_logic.scraper_objectives import fetch_objective_from_url
 
 def fetch_kansalaisaloite():
     return []
 
 def fetch_european_initiatives():
+    objectives = fetch_objective_from_url(EU_URL)
     response = requests.get(EU_URL)
     response_dict = response.json()['entries']
 
