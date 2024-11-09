@@ -22,7 +22,7 @@ def save_initiatives_to_db(titles, urls, vectors):
     
     cursor = connection.cursor()
     
-    query = "INSERT INTO initiatives (title, initiative_url, vector_data) VALUES (%s, %s, %s)"
+    query = "INSERT INTO initiatives (title, initiative_url, vector_data) VALUES (%s, %s, %s) ON DUPLICATE KEY UPDATE vector_data=VALUES(vector_data)"
     
     for title, url, vector in zip(titles, urls, vectors):
         cursor.execute(query, (title, url, vector))
