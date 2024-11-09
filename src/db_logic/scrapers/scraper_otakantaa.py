@@ -39,8 +39,6 @@ def fetch_otakantaa_do_the_work(response_text):
             print(f"Error parsing item: {item}")
 
 
-    return_data = return_data[:5]
-
     # The text is in finnish - we can use the `transformers` module to translate it to english.
     translator = transformers.pipeline("translation", model="Helsinki-NLP/opus-mt-fi-en")
     for item in return_data:
