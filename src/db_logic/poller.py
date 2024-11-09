@@ -41,6 +41,7 @@ def poller(logger):
     descriptions = []
 
     logger.info(f"starting to poll with {len(data)} initiatives")
+    logger.info(f"data: {data}")
     for item in data:
         titles.append(item['title'])
         urls.append(item['url'])
