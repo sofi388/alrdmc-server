@@ -9,6 +9,7 @@ import json
 # There's an RSS feed at https://www.otakantaa.fi/fi/rss/. We can use this to get the latest initiatives.
 
 def fetch_otakantaa():
+    print("Fetching Otakantaa data")
     response = requests.get("https://www.otakantaa.fi/fi/rss/")
     # This is XML - we can use the `xml` module to parse it.
     root = ET.fromstring(response.text)
@@ -63,6 +64,3 @@ def fetch_otakantaa():
             print(f"Error inserting item: {item}")
 
     return return_data
-
-if __name__ == "__main__":
-    print(fetch_otakantaa())

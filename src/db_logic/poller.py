@@ -33,7 +33,11 @@ def save_initiatives_to_db(titles, urls, vectors):
 
 
 def poller(logger):
-    data = scrape_all()
+    try:
+        data = scrape_all()
+    except:
+        logger.error(f"error scraping data. Continuing")
+        return
 
     titles = []
     urls = []
