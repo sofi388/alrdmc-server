@@ -2,11 +2,11 @@ import flask
 import threading
 from flask_openapi3 import OpenAPI
 import logging
-from get_vectors import fetch_all_vectors, fetch_all_titles, fetch_all_urls
 from config.config import PORT
 from config.openapi_config import semantic_vector_tag, semantic_vector_summary, \
                             info, SemanticVectorObject
 from db_logic.poller import poller
+from db_logic.get_vectors import fetch_all_vectors, fetch_all_titles, fetch_all_urls
 
 logger = logging.getLogger("flask.app")
 
