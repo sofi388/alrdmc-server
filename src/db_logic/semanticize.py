@@ -21,17 +21,17 @@ def generate_semantic_vector(text: str):
     """
     To use this function, you can just call it with any text and it will return the semantic vector for that text
     """
-    # First, generate the keywords of the text
-    chat_template = [
-        {
-            "role": "system",
-            "content": "From the following text given by the user, extract a list of specific keywords related to the topic, separated by commas.",
-        },
-        {"role": "user", "content": text[:500]},
-    ]
-    generated_keywords = pipeline_generation_keywords(chat_template, max_new_tokens=50)[0]["generated_text"][-1]['content']
+    # # First, generate the keywords of the text
+    # chat_template = [
+    #     {
+    #         "role": "system",
+    #         "content": "From the following text given by the user, extract a list of specific keywords related to the topic, separated by commas.",
+    #     },
+    #     {"role": "user", "content": text[:500]},
+    # ]
+    # generated_keywords = pipeline_generation_keywords(chat_template, max_new_tokens=50)[0]["generated_text"][-1]['content']
 
-    # print(f"Generated keywords: {generated_keywords}")
+    # # print(f"Generated keywords: {generated_keywords}")
     generated_keywords = text
 
     inputs = tokenizer(
