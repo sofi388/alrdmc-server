@@ -98,7 +98,6 @@ def fetch_all_columns():
                     print(f"Error parsing vector_data for row: {row}")
                     vector_data = None 
 
-            # Include the column in the dictionary even if it is empty or None
             row_data[column_name] = column
         
         if vector_data is not None:
@@ -120,9 +119,3 @@ print(len(res))
 
 print(type(res[0]))  # of dictionaries
 print(len(res[0]))
-
-
-first_row = res[0]
-title = first_row['title']
-
-print(title)
