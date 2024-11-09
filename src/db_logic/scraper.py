@@ -23,8 +23,10 @@ def fetch_european_initiatives(url: str):
     return return_data
 
 def scrape_all():
-    data = fetch_european_initiatives()
+    data = fetch_european_initiatives(EU_URL)
     return data
+
+
 
 if __name__ == "__main__":
     data = fetch_european_initiatives(EU_URL)
