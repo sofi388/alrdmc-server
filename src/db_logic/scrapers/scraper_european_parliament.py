@@ -5,7 +5,7 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 
-urls = "https://www.europarl.europa.eu/petitions/en/show-petitions?keyWords=&years=2024&_years=1&_searchThemes=1&statuses=AVAILABLE&_statuses=1&_countries=1&searchRequest=true&resSize=100&pageSize=100#res"
+url = "https://www.europarl.europa.eu/petitions/en/show-petitions?keyWords=&years=2024&_years=1&_searchThemes=1&statuses=AVAILABLE&_statuses=1&_countries=1&searchRequest=true&resSize=100&pageSize=100#res"
 
 def fetch_initiative_parliament(url: str):
     options = webdriver.ChromeOptions()
@@ -25,25 +25,28 @@ def fetch_initiative_parliament(url: str):
         
         initiatives = []
         
-        # Find all petition links that are paired with titles and descriptions
-        petition_links = driver.find_elements(By.CSS_SELECTOR, "a.t-item")
+        # Find all petition title and description elements
+        elements = driver.find_elements(By.CLASS_NAME, "petition_title")
         
-        for i in range(0, len(petition_links), 2):
-            # Extract the title
-            title_element = petition_links[i].find_element(By.CLASS_NAME, "petition_title")
-            title = title_element.text.strip()
+        # Extract titles, descriptions, and links in pairs
+        for i in range(0, len(elements), 2):
+            title = elements[i].text.strip()  # Title element
             
-            # Extract URL for each petition
-            url = petition_links[i].get_attribute("href")
+            # Check if there's a following element for the description
+            description = elements[i + 1].text.strip() if i + 1 < len(elements) else ""
             
-            # Extract the description (usually follows the title)
-            description_element = petition_links[i + 1].find_element(By.CLASS_NAME, "petition_title").text.strip() if i + 1 < len(petition_links) else ""
+            # Find the link within the title element's parent
+            link_element = elements[i].find_element(By.XPATH, "./ancestor::h2/a")
+            link = link_element.get_attribute("href")
             
-            if title and description_element and url:
+            if title and link:
                 initiatives.append({
                     "title": title,
-                    "description": description_element,
-                    "url": url
+                    "description": description,
+                    "link": link,
+                    "originalTitle": title,
+                    "originalDescription": description
+
                 })
                 
         return initiatives
@@ -56,10 +59,13 @@ def fetch_initiative_parliament(url: str):
         driver.quit()
 
 # Fetch and print the results
-res = fetch_initiative_parliament(urls)
+res = fetch_initiative_parliament(url)
 for initiative in res:
     print(f"Title: {initiative['title']}")
     print(f"Description: {initiative['description']}")
-    print(f"URL: {initiative['url']}")
+    print(f"Link: {initiative['link']}")
     print()
 print(f"Number of initiatives: {len(res)}")
+
+print(type(res))
+print(type(res[0]))
