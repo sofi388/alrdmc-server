@@ -15,6 +15,7 @@ mysql-connector-python = "^9.1.0"
 torch = "^2.5.1"
 selenium = "^4.26.1"
 webdriver-manager = "^4.0.2"
+changedotorgscraper = "^0.0.9"
 
 
 [build-system]

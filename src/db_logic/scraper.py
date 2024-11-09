@@ -1,8 +1,10 @@
 import requests
-from config.config import EU_URL
+from config.config import EU_URL, KANSALAISALOITE_URL
 
+def fetch_kansalaisaloite():
+    return []
 
-def fetch_european_initiatives(url: str):
+def fetch_european_initiatives():
     response = requests.get(EU_URL)
     response_dict = response.json()['entries']
 
@@ -22,9 +24,7 @@ def fetch_european_initiatives(url: str):
     return return_data
 
 def scrape_all():
-    data = fetch_european_initiatives(EU_URL)
+    data = []
+    data += fetch_kansalaisaloite()
+    data += fetch_european_initiatives()
     return data
-
-if __name__ == "__main__":
-    data = fetch_european_initiatives(EU_URL)
-    print(data)
