@@ -3,19 +3,28 @@ import requests
 import xml.etree.ElementTree as ET
 from db_logic.semanticize import generate_semantic_vector
 import json
+from pathlib import Path
+import mysql
 
 # There's an RSS feed at https://www.otakantaa.fi/fi/rss/. We can use this to get the latest initiatives.
 def fetch_otakantaa():
     try:
-        return fetch_otakantaa_do_the_work()
+        response = requests.get("https://www.otakantaa.fi/fi/rss/")
+        return fetch_otakantaa_do_the_work(response.text)
     except Exception as e:
-        print(f"Error fetching Otakantaa data: {e}")
+        print(f"Error fetching Otakantaa data: {e}. Retrying with local dump")
+        # Use src/db_logic/scrapers/rss_dump.rss
+        try:
+            with open(Path(__file__).parent / "rss_dump.rss", 'r') as f:
+                return fetch_otakantaa_do_the_work(f.read())
+        except Exception as e:
+            print(f"Error fetching Otakantaa data from local dump: {e}")
+            return []
 
-def fetch_otakantaa_do_the_work():
+def fetch_otakantaa_do_the_work(response_text):
     print("Fetching Otakantaa data")
-    response = requests.get("https://www.otakantaa.fi/fi/rss/")
     # This is XML - we can use the `xml` module to parse it.
-    root = ET.fromstring(response.text)
+    root = ET.fromstring(response_text)
 
     # Convert the XML to a list of dictionaries.
     return_data = []
