@@ -7,7 +7,7 @@ import time
 
 url = "https://www.europarl.europa.eu/petitions/en/show-petitions?keyWords=&years=2024&_years=1&_searchThemes=1&statuses=AVAILABLE&_statuses=1&_countries=1&searchRequest=true&resSize=100&pageSize=100#res"
 
-def fetch_initiative_parliament(url: str):
+def fetch_parliament(url: str):
     options = webdriver.ChromeOptions()
     options.headless = True
     options.add_argument('--no-sandbox')
@@ -59,7 +59,7 @@ def fetch_initiative_parliament(url: str):
         driver.quit()
 
 # Fetch and print the results
-res = fetch_initiative_parliament(url)
+res = fetch_parliament(url)
 for initiative in res:
     print(f"Title: {initiative['title']}")
     print(f"Description: {initiative['description']}")

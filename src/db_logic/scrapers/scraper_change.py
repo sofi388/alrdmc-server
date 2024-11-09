@@ -106,6 +106,14 @@ def fetch_change(urls=urls):
 
     return res
 
+"""
+Test results
+"""
 res = fetch_change()
-print(res)
-print(len(res))
+
+for initiative in res:
+    print(f"Title: {initiative['title']}")
+    print(f"Description: {initiative['description']}")
+    print(f"Link: {initiative['url']}")
+    print()
+print(f"Number of initiatives: {len(res)}")
