@@ -7,20 +7,20 @@ import time
 
 urls = [
     "https://www.change.org/t/abortion-access-en-us?source_location=homepage",
-    "https://www.change.org/t/health-and-well-being-en-us?source_location=topic_page",
-    "https://www.change.org/t/public-health-en-us?source_location=topic_page",
-    "https://www.change.org/t/government-and-politics-en-us?source_location=topic_page",
-    "https://www.change.org/t/public-safety-2?source_location=topic_page",
-    "https://www.change.org/t/criminal-justice-en-US?source_location=topic_page",
-    "https://www.change.org/t/student-issues-en-us?source_location=topic_page",
-    "https://www.change.org/t/free-speech-en-us?source_location=homepage",
-    "https://www.change.org/t/entertainment-media-en-us?source_location=topic_page",
-    "https://www.change.org/t/technology-9?source_location=topic_page",
-    "https://www.change.org/t/video-games-online-gaming-en-us?source_location=topic_page",
-    "https://www.change.org/t/consumer-rights-en-us?source_location=topic_page",
-    "https://www.change.org/t/environmental-issues-en-us?source_location=topic_page",
-    "https://www.change.org/t/animal-rights-and-conservation-en-us?source_location=topic_page",
-    "https://www.change.org/t/business-and-economy-en-us?source_location=topic_page"
+#    "https://www.change.org/t/health-and-well-being-en-us?source_location=topic_page",
+#    "https://www.change.org/t/public-health-en-us?source_location=topic_page",
+#    "https://www.change.org/t/government-and-politics-en-us?source_location=topic_page",
+#    "https://www.change.org/t/public-safety-2?source_location=topic_page",
+#    "https://www.change.org/t/criminal-justice-en-US?source_location=topic_page",
+#    "https://www.change.org/t/student-issues-en-us?source_location=topic_page",
+#    "https://www.change.org/t/free-speech-en-us?source_location=homepage",
+#    "https://www.change.org/t/entertainment-media-en-us?source_location=topic_page",
+#    "https://www.change.org/t/technology-9?source_location=topic_page",
+#    "https://www.change.org/t/video-games-online-gaming-en-us?source_location=topic_page",
+#    "https://www.change.org/t/consumer-rights-en-us?source_location=topic_page",
+#    "https://www.change.org/t/environmental-issues-en-us?source_location=topic_page",
+#    "https://www.change.org/t/animal-rights-and-conservation-en-us?source_location=topic_page",
+#    "https://www.change.org/t/business-and-economy-en-us?source_location=topic_page"
 ]
 
 def fetch_initiative_change(url: str):
