@@ -13,7 +13,8 @@ tokenizer = AutoTokenizer.from_pretrained(
 model = AutoModel.from_pretrained(
     "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 )
-pipeline_generation_keywords = pipeline("text-generation", model='meta-llama/Llama-3.2-1B-Instruct', torch_dtype=torch.bfloat16, token=os.getenv("HF_TOKEN"))
+# pipeline_generation_keywords = pipeline("text-generation", model='meta-llama/Llama-3.2-1B-Instruct', torch_dtype=torch.bfloat16, token=os.getenv("HF_TOKEN"))
+pipeline_generation_keywords = pipeline("text-generation", model='google/gemma-2-2b-it', torch_dtype=torch.bfloat16, token=os.getenv("HF_TOKEN"))
 
 
 def generate_semantic_vector(text: str):
@@ -24,7 +25,7 @@ def generate_semantic_vector(text: str):
     chat_template = [
         {
             "role": "system",
-            "content": "From the following text, given by the user, extract a list of specific keywords related to the topic",
+            "content": "From the following text given by the user, extract a list of specific keywords related to the topic, separated by commas.",
         },
         {"role": "user", "content": text},
     ]
