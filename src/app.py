@@ -2,6 +2,7 @@ import flask
 import threading
 from flask_openapi3 import OpenAPI
 import logging
+from get_vectors import fetch_all_vectors, fetch_all_titles
 
 from config.config import PORT
 from config.openapi_config import semantic_vector_tag, semantic_vector_summary, \
@@ -24,6 +25,11 @@ def get_semantic_vectors():
     logger.info(f"fetching semantic vectors from DB")
     ### DB query logic here
     
+    semantic_vector_list = fetch_all_vectors() # list of numpy arrays
+    titles_list = fetch_all_titles() # list of strings
+
+
+
     semantic_vector_objects = [SemanticVectorObject(
         semantic_vector=generate_semantic_vector("lol"),
         semantic_vector_url="https://social.mtdv.me/articles/initiative"
