@@ -1,7 +1,7 @@
 # from config.config import POLLING_INTERVAL
-from scraper import scrape_all
-from semanticize import generate_semantic_vector
-from scraper_objectives import fetch_objective_from_url
+from db_logic.scraper import scrape_all
+from db_logic.semanticize import generate_semantic_vector
+from db_logic.scraper_objectives import fetch_objective_from_url
 import mysql.connector
 import json
 import logging
@@ -62,24 +62,3 @@ def poller(logger):
 
 if __name__ == "__main__":
     poller(logger)
-
-
-"""
-def periodic_poller(logger):
-    while True:
-        logger.info(f"polling for new initiatives after {POLLING_INTERVAL} seconds")
-        time.sleep(POLLING_INTERVAL)
-        logger.info(f"scraping initiatives")
-        data = scrape_all()
-
-        titles = []
-        urls = []
-        for item in data:
-            titles.append(item['title'])
-            urls.append(item['url'])
-        
-        save_to_mysql(titles, urls)
-
-        logger.info(f"got {len(data)} initiatives, pushing to db")
-        # push to db
-"""
