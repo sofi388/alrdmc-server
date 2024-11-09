@@ -46,6 +46,24 @@ def fetch_all_titles():
 
     return title_list
 
+def fetch_all_original_titles():
+    connection = mysql.connector.connect(**CONNECTION_CONFIG)
+    cursor = connection.cursor()
+
+    query = "SELECT original_title FROM initiatives WHERE vector_data IS NOT NULL"
+    cursor.execute(query)
+    
+    title_list = []
+    
+    for (title_data,) in cursor.fetchall():
+        title = title_data
+        title_list.append(title)
+
+    cursor.close()
+    connection.close()
+
+    return title_list
+
 def fetch_all_urls():
     connection = mysql.connector.connect(**CONNECTION_CONFIG)
     cursor = connection.cursor()
@@ -64,6 +82,41 @@ def fetch_all_urls():
 
     return url_list
 
+def fetch_all_descriptions():
+    connection = mysql.connector.connect(**CONNECTION_CONFIG)
+    cursor = connection.cursor()
+
+    query = "SELECT description FROM initiatives WHERE vector_data IS NOT NULL"
+    cursor.execute(query)
+    
+    url_list = []
+    
+    for (url_data,) in cursor.fetchall():
+        url = url_data
+        url_list.append(url)
+
+    cursor.close()
+    connection.close()
+
+    return url_list
+
+def fetch_all_original_descriptions():
+    connection = mysql.connector.connect(**CONNECTION_CONFIG)
+    cursor = connection.cursor()
+
+    query = "SELECT original_description FROM initiatives WHERE vector_data IS NOT NULL"
+    cursor.execute(query)
+    
+    url_list = []
+    
+    for (url_data,) in cursor.fetchall():
+        url = url_data
+        url_list.append(url)
+
+    cursor.close()
+    connection.close()
+
+    return url_list
 
 def fetch_all_columns():
     connection = mysql.connector.connect(**CONNECTION_CONFIG)

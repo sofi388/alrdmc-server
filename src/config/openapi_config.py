@@ -9,3 +9,7 @@ semantic_vector_summary = "get all semantic vectors in DB"
 class SemanticVectorObject(BaseModel):
     semantic_vector: list[float]
     semantic_vector_url: str
+    description: str
+    original_description: str
+    title: str
+    original_title: str
