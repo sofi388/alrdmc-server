@@ -21,10 +21,10 @@ def save_initiatives_to_db(titles, original_titles, urls, descriptions, original
     
     cursor = connection.cursor()
     
-    query = "INSERT INTO initiatives (title, initiative_url, description, vector_data) VALUES (%s, %s, %s, %s) ON DUPLICATE KEY UPDATE vector_data=VALUES(vector_data)"
+    query = "INSERT INTO initiatives (title, original_title, initiative_url, description, original_description, vector_data) VALUES (%s, %s, %s, %s, %s, %s) ON DUPLICATE KEY UPDATE vector_data=VALUES(vector_data)"
     
-    for title, url, description,vector in zip(titles, urls, descriptions, vectors):
-        cursor.execute(query, (title, url, description, vector))
+    for title, original_title, url, description, original_description, vector in zip(titles, original_titles, urls, descriptions, original_descriptions, vectors):
+        cursor.execute(query, (title, original_title, url, description, original_description, vector))
     
     connection.commit()
     cursor.close()
