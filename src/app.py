@@ -7,7 +7,7 @@ from config.openapi_config import semantic_vector_tag, semantic_vector_summary, 
                             info, SemanticVectorObject
 from db_logic.poller import poller as poller_euci
 from db_logic.get_vectors import fetch_all_vectors, fetch_all_titles, fetch_all_urls
-from db_logic.otakantaa_scraper import fetch_otakantaa
+from db_logic.scrapers.scraper_otakantaa import fetch_otakantaa
 
 logger = logging.getLogger("flask.app")
 

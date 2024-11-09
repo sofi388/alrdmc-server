@@ -1,6 +1,6 @@
 from db_logic.scraper import scrape_all
 from db_logic.semanticize import generate_semantic_vector
-from db_logic.scraper_objectives import fetch_objective_from_url
+from db_logic.scrapers.scraper_europe_initiatives import fetch_objective_from_url
 import mysql.connector
 import json
 import logging
@@ -8,7 +8,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-def save_initiatives_to_db(titles, urls, vectors):
+def save_initiatives_to_db(titles, urls, descriptions,vectors):
     """
     Saves title, initiative url and semantic vector of the title.
     """
@@ -22,10 +22,10 @@ def save_initiatives_to_db(titles, urls, vectors):
     
     cursor = connection.cursor()
     
-    query = "INSERT INTO initiatives (title, initiative_url, vector_data) VALUES (%s, %s, %s) ON DUPLICATE KEY UPDATE vector_data=VALUES(vector_data)"
+    query = "INSERT INTO initiatives (title, initiative_url, description, vector_data) VALUES (%s, %s, %s, %s) ON DUPLICATE KEY UPDATE vector_data=VALUES(vector_data)"
     
-    for title, url, vector in zip(titles, urls, vectors):
-        cursor.execute(query, (title, url, vector))
+    for title, url, description,vector in zip(titles, urls, descriptions, vectors):
+        cursor.execute(query, (title, url, description, vector))
     
     connection.commit()
     cursor.close()
@@ -42,12 +42,13 @@ def poller(logger):
     titles = []
     urls = []
     vectors = []
-    objectives = []
+    descriptions = []
 
     logger.info(f"starting to poll")
     for item in data:
         titles.append(item['title'])
         urls.append(item['url'])
+        descriptions.append(item['description'])
         vectors.append(json.dumps(generate_semantic_vector(item['title'])))
 
     save_initiatives_to_db(titles, urls, vectors)

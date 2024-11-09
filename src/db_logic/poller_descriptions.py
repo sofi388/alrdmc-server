@@ -6,11 +6,8 @@ import mysql.connector
 import json
 import logging
 
-
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-
-
 
 def save_initiatives_to_db(titles, urls, vectors, objectives):
     """

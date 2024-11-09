@@ -5,7 +5,6 @@ import xml.etree.ElementTree as ET
 from db_logic.semanticize import generate_semantic_vector
 import json
 
-
 # There's an RSS feed at https://www.otakantaa.fi/fi/rss/. We can use this to get the latest initiatives.
 def fetch_otakantaa():
     try:
