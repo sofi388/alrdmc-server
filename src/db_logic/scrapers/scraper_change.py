@@ -5,11 +5,23 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 
-URL_ABORTIONS = "https://www.change.org/t/abortion-access-en-us?source_location=homepage"
-URL_HEALTH = "https://www.change.org/t/health-and-well-being-en-us?source_location=topic_page"
-URL_PUBLICHEALTH = "https://www.change.org/t/public-health-en-us?source_location=topic_page"
-
-
+urls = [
+    "https://www.change.org/t/abortion-access-en-us?source_location=homepage",
+    "https://www.change.org/t/health-and-well-being-en-us?source_location=topic_page",
+    "https://www.change.org/t/public-health-en-us?source_location=topic_page",
+    "https://www.change.org/t/government-and-politics-en-us?source_location=topic_page",
+    "https://www.change.org/t/public-safety-2?source_location=topic_page",
+    "https://www.change.org/t/criminal-justice-en-US?source_location=topic_page",
+    "https://www.change.org/t/student-issues-en-us?source_location=topic_page",
+    "https://www.change.org/t/free-speech-en-us?source_location=homepage",
+    "https://www.change.org/t/entertainment-media-en-us?source_location=topic_page",
+    "https://www.change.org/t/technology-9?source_location=topic_page",
+    "https://www.change.org/t/video-games-online-gaming-en-us?source_location=topic_page",
+    "https://www.change.org/t/consumer-rights-en-us?source_location=topic_page",
+    "https://www.change.org/t/environmental-issues-en-us?source_location=topic_page",
+    "https://www.change.org/t/animal-rights-and-conservation-en-us?source_location=topic_page",
+    "https://www.change.org/t/business-and-economy-en-us?source_location=topic_page"
+]
 
 def fetch_initiative_change(url: str):
     options = webdriver.ChromeOptions()
@@ -80,9 +92,11 @@ def fetch_descriptions_for_initiatives(initiatives: dict):
         driver.quit()
 
 
-res = fetch_initiative_change(URL_ABORTIONS)
-res += fetch_initiative_change(URL_HEALTH)
-res += fetch_initiative_change(URL_PUBLICHEALTH)
+res = []
+
+for url in urls:
+    res += fetch_initiative_change(url)
+
 
 unique_initiatives = {initiative['url']: initiative for initiative in res}
 fetch_descriptions_for_initiatives(unique_initiatives)
