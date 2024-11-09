@@ -9,7 +9,7 @@ def fetch_objective_from_url(url: str):
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
 
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager(version="130").install()), options=options)
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     driver.get(url)
     driver.implicitly_wait(10)
     
@@ -34,7 +34,7 @@ def fetch_kansalaisaloite_lists_from_url(url: str):
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
 
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager(version="130").install()), options=options)
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     driver.get(url)
     driver.implicitly_wait(10)
     
