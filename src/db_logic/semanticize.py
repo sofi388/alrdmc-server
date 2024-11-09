@@ -28,7 +28,7 @@ def generate_semantic_vector(text: str):
         },
         {"role": "user", "content": text},
     ]
-    generated_keywords = pipeline_generation_keywords(chat_template, max_new_tokens=100)[0]["generated_text"]
+    generated_keywords = pipeline_generation_keywords(chat_template, max_new_tokens=100)[0]["generated_text"][-1]['content']
 
     print(f"Generated keywords: {generated_keywords}")
 
