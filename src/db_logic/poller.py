@@ -7,7 +7,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-def save_initiatives_to_db(titles, urls, descriptions, vectors):
+def save_initiatives_to_db(titles, original_titles, urls, descriptions, original_descriptions, vectors):
     """
     Saves title, initiative url and semantic vector of the title.
     """
@@ -36,19 +36,23 @@ def poller(logger):
     data = scrape_all(logger)
 
     titles = []
+    original_titles = []
     urls = []
     vectors = []
     descriptions = []
+    original_descriptions = []
 
     logger.info(f"starting to poll with {len(data)} initiatives")
     logger.info(f"data: {data}")
     for item in data:
         titles.append(item['title'])
+        original_titles.append(item['originalTitle'])
         urls.append(item['url'])
         descriptions.append(item['description'])
+        original_descriptions.append(item['originalDescription'])
         vectors.append(json.dumps(generate_semantic_vector(item['title'] + item['description'])))
     logger.info(f"got {len(data)} initiatives, pushing to db")
-    save_initiatives_to_db(titles, urls, descriptions, vectors)
+    save_initiatives_to_db(titles, original_titles, urls, descriptions, original_descriptions, vectors)
     logger.info(f"pushed {len(data)} initiatives to db")
 
 

@@ -21,8 +21,10 @@ def fetch_kansalaisaloite():
         list_contents = [
                     {
                         "title": item.text.strip(), 
+                        "originalTitle": item.text.strip(),
                         "url": item.find_element(By.TAG_NAME, "a").get_attribute("href"),
-                        "description": item.text.strip()
+                        "description": item.text.strip(),
+                        "originalDescription": item.text.strip(),
                     }
                 for item in list_items if item.text.strip()]
 

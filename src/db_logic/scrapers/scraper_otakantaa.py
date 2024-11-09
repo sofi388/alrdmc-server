@@ -31,21 +31,21 @@ def fetch_otakantaa_do_the_work(response_text):
     for item in root.findall("./channel/item"):
         try:
             return_data.append({
-                "title": item.find("title").text,
+                "originalTitle": item.find("title").text,
                 "url": item.find("link").text,
-                "description": item.find("description").text,
+                "originalDescription": item.find("description").text,
             })
         except:
             print(f"Error parsing item: {item}")
 
-    return_data = return_data[:20]
+    return_data = return_data[:60]
     # The text is in finnish - we can use the `transformers` module to translate it to english.
     translator = transformers.pipeline("translation", model="Helsinki-NLP/opus-mt-fi-en")
     for item in return_data:
         print("Translating item...")
         try:
-            item["title"] = translator(item["title"])[0]["translation_text"]
-            item["description"] = translator(item["description"])[0]["translation_text"]
+            item["title"] = translator(item["originalTitle"])[0]["translation_text"]
+            item["description"] = translator(item["originalDescription"])[0]["translation_text"]
         except:
             print(f"Error translating item: {item}")
     

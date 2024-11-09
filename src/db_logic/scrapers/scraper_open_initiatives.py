@@ -4,25 +4,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
-def fetch_european_initiatives():
-    objectives = fetch_objective_from_url(EU_URL)
-    response = requests.get(EU_URL)
-    response_dict = response.json()['entries']
-
-    return_data = []
-
-    for initiative in response_dict:
-        if "title" not in initiative or "supportLink" not in initiative:
-            continue
-
-        initiative_object = {
-            "title": initiative["title"],
-            "url": f"https://citizens-initiative.europa.eu/initiatives/details/{initiative['year']}/{initiative['number']}",
-        }
-
-        return_data.append(initiative_object)
-
-    return return_data
 def fetch_initiative_links_and_texts(url: str):
     options = webdriver.ChromeOptions()
     options.headless = True
@@ -39,7 +20,13 @@ def fetch_initiative_links_and_texts(url: str):
         
         # Extract text and link from each element
         initiatives = [
-            {"text": div.text.strip(), "link": div.get_attribute("href")}
+            {
+                "title": div.text.strip(),
+                "originalTitle": div.text.strip(),
+                "description": div.text.strip(), 
+                "originalDescription": div.text.strip(),
+                "url": div.get_attribute("href"),
+            }
             for div in objective_divs if div.text.strip() and div.get_attribute("href")
         ]
         
