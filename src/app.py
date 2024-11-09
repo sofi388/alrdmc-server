@@ -5,13 +5,17 @@ import logging
 from config.config import PORT
 from config.openapi_config import semantic_vector_tag, semantic_vector_summary, \
                             info, SemanticVectorObject
-from db_logic.poller import poller
+from db_logic.poller import poller as poller_euci
 from db_logic.get_vectors import fetch_all_vectors, fetch_all_titles, fetch_all_urls
+from db_logic.otakantaa_scraper import fetch_otakantaa
 
 logger = logging.getLogger("flask.app")
 
-poller = threading.Thread(target=poller, args=(logger,))
+poller = threading.Thread(target=poller_euci, args=(logger,))
 poller.start()
+
+otakantaa_thread = threading.Thread(target=fetch_otakantaa, args=(logger,))
+otakantaa_thread.start()
 
 app = OpenAPI(__name__, info=info)
 @app.get("/semantic_vectors", summary=semantic_vector_summary, tags=[semantic_vector_tag])
