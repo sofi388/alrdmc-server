@@ -20,7 +20,9 @@ urls = [
 #    "https://www.change.org/t/consumer-rights-en-us?source_location=topic_page",
 #    "https://www.change.org/t/environmental-issues-en-us?source_location=topic_page",
 #    "https://www.change.org/t/animal-rights-and-conservation-en-us?source_location=topic_page",
-#    "https://www.change.org/t/business-and-economy-en-us?source_location=topic_page"
+#    "https://www.change.org/t/business-and-economy-en-us?source_location=topic_page",
+#    "https://www.change.org/t/corporate-responsibility-en-us?source_location=topic_page",
+#    "https://www.change.org/t/free-speech-en-us?source_location=homepage"
 ]
 
 def fetch_initiative_change(url: str):
@@ -36,21 +38,19 @@ def fetch_initiative_change(url: str):
     initiatives = []
 
     try:
-        # Get all elements with the specified class
         objective_divs = driver.find_elements(By.CLASS_NAME, "corgi-1vlmmoi")
 
         for div in objective_divs:
             title = div.text.strip()
 
-            # Find the closest parent or sibling anchor tag
             parent = div.find_element(By.XPATH, "./ancestor::a")
             url = parent.get_attribute("href") if parent else None
 
-            # Only add entries with a valid URL and text
             if title and url:
                 initiatives.append({
                     "title": title,
-                    "url": url
+                    "url": url,
+                    "originalTitle": title
                 })
 
         return initiatives
@@ -84,25 +84,24 @@ def fetch_descriptions_for_initiatives(initiatives: dict):
                 description_element = driver.find_element(By.CLASS_NAME, "e19irtt30.corgi-1qn3huw")
                 description_text = description_element.text.strip()
                 initiative["description"] = description_text
+                initiative["originalDescription"] = description_text
             except Exception as e:
                 print(f"Error fetching description from {initiative['url']}: {e}")
                 initiative["description"] = "No description found"
+                initiative["originalDescription"] = "No description found"
 
     finally:
         driver.quit()
 
+def fetch_change(urls=urls):
+    res = []
 
-res = []
+    for url in urls:
+        res += fetch_initiative_change(url)
 
-for url in urls:
-    res += fetch_initiative_change(url)
+    unique_initiatives = {initiative['url']: initiative for initiative in res}
+    fetch_descriptions_for_initiatives(unique_initiatives)
 
+    res = list(unique_initiatives.values())
 
-unique_initiatives = {initiative['url']: initiative for initiative in res}
-fetch_descriptions_for_initiatives(unique_initiatives)
-
-res = list(unique_initiatives.values())
-
-for initiative in res:
-    print(initiative)
-print(f"Total unique initiatives found: {len(res)}")
+    return res
