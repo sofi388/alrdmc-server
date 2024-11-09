@@ -24,11 +24,11 @@ def generate_semantic_vector(text: str):
     chat_template = [
         {
             "role": "system",
-            "content": "From the following text, given by the user, extract a list of specific keywords related to the topic",
+            "content": "From the following text given by the user, extract a list of specific keywords related to the topic, separated by commas.",
         },
         {"role": "user", "content": text},
     ]
-    generated_keywords = pipeline_generation_keywords(chat_template, max_new_tokens=100)[0]["generated_text"]
+    generated_keywords = pipeline_generation_keywords(chat_template, max_new_tokens=100)[0]["generated_text"][-1]['content']
 
     print(f"Generated keywords: {generated_keywords}")
 
