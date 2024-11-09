@@ -57,8 +57,6 @@ def fetch_initiative_change(url: str):
             return []
 
 
-
-
 def fetch_descriptions_for_initiatives(initiatives: dict):
     """
     Fetch descriptions for each initiative in the dictionary and update it.
@@ -86,19 +84,3 @@ def fetch_descriptions_for_initiatives(initiatives: dict):
 
     finally:
         driver.quit()
-
-
-res = []
-
-for url in urls:
-    res += fetch_initiative_change(url)
-
-
-unique_initiatives = {initiative['url']: initiative for initiative in res}
-fetch_descriptions_for_initiatives(unique_initiatives)
-
-res = list(unique_initiatives.values())
-
-for initiative in res:
-    print(initiative)
-print(f"Total unique initiatives found: {len(res)}")

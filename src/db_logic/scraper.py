@@ -8,7 +8,7 @@ from db_logic.scrapers.scraper_change import fetch_initiative_change
 import concurrent.futures
 
 def scrape_all(logger):
-    scrapers = []
+    scrapers = [fetch_european_initiatives, fetch_otakantaa, fetch_initiative_change]
     data = []
     with concurrent.futures.ThreadPoolExecutor() as executor:
         futures = {executor.submit(scraper): scraper.__name__ for scraper in scrapers}
