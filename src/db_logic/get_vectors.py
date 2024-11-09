@@ -14,7 +14,7 @@ def fetch_all_vectors():
     connection = mysql.connector.connect(**CONNECTION_CONFIG)
     cursor = connection.cursor()
 
-    query = "SELECT vector_data FROM initiatives WHERE vector_data IS NOT NULL"
+    query = "SELECT vector_data FROM initiatives WHERE vector_data IS NOT NULL ORDER BY initiative_id"
     cursor.execute(query)
     
     vector_list = []
@@ -32,7 +32,7 @@ def fetch_all_titles():
     connection = mysql.connector.connect(**CONNECTION_CONFIG)
     cursor = connection.cursor()
 
-    query = "SELECT title FROM initiatives WHERE vector_data IS NOT NULL"
+    query = "SELECT title FROM initiatives WHERE vector_data IS NOT NULL ORDER BY initiative_id"
     cursor.execute(query)
     
     title_list = []
@@ -50,7 +50,7 @@ def fetch_all_original_titles():
     connection = mysql.connector.connect(**CONNECTION_CONFIG)
     cursor = connection.cursor()
 
-    query = "SELECT original_title FROM initiatives WHERE vector_data IS NOT NULL"
+    query = "SELECT original_title FROM initiatives WHERE vector_data IS NOT NULL ORDER BY initiative_id"
     cursor.execute(query)
     
     title_list = []
@@ -68,7 +68,7 @@ def fetch_all_urls():
     connection = mysql.connector.connect(**CONNECTION_CONFIG)
     cursor = connection.cursor()
 
-    query = "SELECT initiative_url FROM initiatives WHERE vector_data IS NOT NULL"
+    query = "SELECT initiative_url FROM initiatives WHERE vector_data IS NOT NULL ORDER BY initiative_id"
     cursor.execute(query)
     
     url_list = []
@@ -86,7 +86,7 @@ def fetch_all_descriptions():
     connection = mysql.connector.connect(**CONNECTION_CONFIG)
     cursor = connection.cursor()
 
-    query = "SELECT description FROM initiatives WHERE vector_data IS NOT NULL"
+    query = "SELECT description FROM initiatives WHERE vector_data IS NOT NULL ORDER BY initiative_id"
     cursor.execute(query)
     
     url_list = []
@@ -104,7 +104,7 @@ def fetch_all_original_descriptions():
     connection = mysql.connector.connect(**CONNECTION_CONFIG)
     cursor = connection.cursor()
 
-    query = "SELECT original_description FROM initiatives WHERE vector_data IS NOT NULL"
+    query = "SELECT original_description FROM initiatives WHERE vector_data IS NOT NULL ORDER BY initiative_id"
     cursor.execute(query)
     
     url_list = []
@@ -122,7 +122,7 @@ def fetch_all_columns():
     connection = mysql.connector.connect(**CONNECTION_CONFIG)
     cursor = connection.cursor()
 
-    query = "SELECT * FROM initiatives"
+    query = "SELECT * FROM initiatives WHERE vector_data IS NOT NULL ORDER BY initiative_id"
     cursor.execute(query)
     
     result_list = []
