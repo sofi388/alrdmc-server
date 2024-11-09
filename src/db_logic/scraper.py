@@ -1,7 +1,6 @@
 import requests
-from src.config.config import EU_URL
+from config.config import EU_URL
 
-EU_URL = "https://register.eci.ec.europa.eu/core/api/register/search/ALL/EN/0/20"
 
 def fetch_european_initiatives(url: str):
     response = requests.get(EU_URL)
