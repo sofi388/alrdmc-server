@@ -1,5 +1,5 @@
-from db_logic.scraper import scrape_all
-from db_logic.semanticize import generate_semantic_vector
+from scraper import scrape_all
+from semanticize import generate_semantic_vector
 import mysql.connector
 import json
 import logging

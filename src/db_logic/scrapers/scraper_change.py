@@ -5,14 +5,15 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 
+# Keep the list of all possibl urls
 urls = [
     "https://www.change.org/t/abortion-access-en-us?source_location=homepage",
-#    "https://www.change.org/t/health-and-well-being-en-us?source_location=topic_page",
-#    "https://www.change.org/t/public-health-en-us?source_location=topic_page",
-#    "https://www.change.org/t/government-and-politics-en-us?source_location=topic_page",
-#    "https://www.change.org/t/public-safety-2?source_location=topic_page",
-#    "https://www.change.org/t/criminal-justice-en-US?source_location=topic_page",
-#    "https://www.change.org/t/student-issues-en-us?source_location=topic_page",
+    "https://www.change.org/t/health-and-well-being-en-us?source_location=topic_page",
+    "https://www.change.org/t/public-health-en-us?source_location=topic_page",
+    "https://www.change.org/t/government-and-politics-en-us?source_location=topic_page",
+    "https://www.change.org/t/public-safety-2?source_location=topic_page",
+    "https://www.change.org/t/criminal-justice-en-US?source_location=topic_page",
+    "https://www.change.org/t/student-issues-en-us?source_location=topic_page",
 #    "https://www.change.org/t/free-speech-en-us?source_location=homepage",
 #    "https://www.change.org/t/entertainment-media-en-us?source_location=topic_page",
 #    "https://www.change.org/t/technology-9?source_location=topic_page",
@@ -23,6 +24,12 @@ urls = [
 #    "https://www.change.org/t/business-and-economy-en-us?source_location=topic_page",
 #    "https://www.change.org/t/corporate-responsibility-en-us?source_location=topic_page",
 #    "https://www.change.org/t/free-speech-en-us?source_location=homepage"
+#    "https://www.change.org/browse"
+#    "https://www.change.org/t/entertainment-11?source_location=homepage"
+#    "https://www.change.org/t/sports-12?source_location=topic_page"
+#    "https://www.change.org/t/recreational-infrastructure-en-us?source_location=topic_page"
+#    "https://www.change.org/browse/recent"
+
 ]
 
 def fetch_initiative_change(url: str):
@@ -78,7 +85,7 @@ def fetch_descriptions_for_initiatives(initiatives: dict):
     try:
         for initiative in initiatives.values():
             driver.get(initiative["url"])
-            time.sleep(1)  # Ensure the page fully loads
+            time.sleep(1)  
 
             try:
                 description_element = driver.find_element(By.CLASS_NAME, "e19irtt30.corgi-1qn3huw")

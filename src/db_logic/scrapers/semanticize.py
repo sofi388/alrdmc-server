@@ -1,11 +1,12 @@
 # Load model directly
+import os
+os.environ["HF_HOME"] = "D:/cache"
+from dotenv import load_dotenv
+load_dotenv()
 from transformers import AutoTokenizer, AutoModel, pipeline
 import torch
 
-# Load the HF_TOKEN from the .env file
-from dotenv import load_dotenv
-import os
-load_dotenv()
+
 
 tokenizer = AutoTokenizer.from_pretrained(
     "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
