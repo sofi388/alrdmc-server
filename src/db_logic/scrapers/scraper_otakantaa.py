@@ -1,6 +1,5 @@
 import transformers
 import requests
-import mysql
 import xml.etree.ElementTree as ET
 from db_logic.semanticize import generate_semantic_vector
 import json
@@ -8,7 +7,7 @@ import json
 # There's an RSS feed at https://www.otakantaa.fi/fi/rss/. We can use this to get the latest initiatives.
 def fetch_otakantaa():
     try:
-        fetch_otakantaa_do_the_work()
+        return fetch_otakantaa_do_the_work()
     except Exception as e:
         print(f"Error fetching Otakantaa data: {e}")
 
@@ -30,9 +29,13 @@ def fetch_otakantaa_do_the_work():
         except:
             print(f"Error parsing item: {item}")
 
+
+    return_data = return_data[:5]
+
     # The text is in finnish - we can use the `transformers` module to translate it to english.
     translator = transformers.pipeline("translation", model="Helsinki-NLP/opus-mt-fi-en")
     for item in return_data:
+        print("Translating item...")
         try:
             item["title_en"] = translator(item["title"])[0]["translation_text"]
             item["description_en"] = translator(item["description"])[0]["translation_text"]
@@ -68,3 +71,6 @@ def fetch_otakantaa_do_the_work():
             print(f"Error inserting item: {item}")
 
     return return_data
+
+if __name__ == "__main__":
+    print(fetch_otakantaa())
