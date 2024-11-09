@@ -14,10 +14,7 @@ def fetch_objective_from_url(url: str):
     driver.implicitly_wait(10)
     
     try:
-        # Find the div containing the objectives
         objective_div = driver.find_element(By.ID, "initiativeDetails")
-        
-        # Extract the objective text
         objective_text = objective_div.text.strip()
         
         if objective_text:
@@ -29,16 +26,5 @@ def fetch_objective_from_url(url: str):
         print(f"Error extracting objective: {e}")
         return " "
     finally:
-        # Close the browser window
         driver.quit()
 
-# Example of how to use the function:
-# url = "https://eci.ec.europa.eu/035/public/?lg=en"
-url = "https://eci.ec.europa.eu/047/public/?lg=en"
-objective_text = fetch_objective_from_url(url)
-
-if objective_text:
-    print("Objective Text Extracted:")
-    print(objective_text)
-else:
-    print("No objective text available.")

@@ -6,11 +6,10 @@ import mysql.connector
 import json
 import logging
 
-
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-def save_initiatives_to_db(titles, urls, vectors):#, objectives):
+def save_initiatives_to_db(titles, urls, vectors):
     """
     Saves title, initiative url and semantic vector of the title.
     """
@@ -28,9 +27,6 @@ def save_initiatives_to_db(titles, urls, vectors):#, objectives):
     
     for title, url, vector in zip(titles, urls, vectors):
         cursor.execute(query, (title, url, vector))
-
-    # for title, url, vector, objective in zip(titles, urls, vectors, objectives):
-    #     cursor.execute(query, (title, url, vector, objective))
     
     connection.commit()
     cursor.close()
@@ -50,9 +46,8 @@ def poller(logger):
         titles.append(item['title'])
         urls.append(item['url'])
         vectors.append(json.dumps(generate_semantic_vector(item['title'])))
-        # objectives.append(fetch_objective_from_url(item['url']))
 
-    save_initiatives_to_db(titles, urls, vectors) #, objectives)
+    save_initiatives_to_db(titles, urls, vectors)
 
     logger.info(f"got {len(data)} initiatives, pushing to db")
 

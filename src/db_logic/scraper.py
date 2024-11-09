@@ -26,8 +26,6 @@ def scrape_all():
     data = fetch_european_initiatives(EU_URL)
     return data
 
-
-
 if __name__ == "__main__":
     data = fetch_european_initiatives(EU_URL)
     print(data)
