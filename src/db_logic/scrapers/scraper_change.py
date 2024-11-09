@@ -30,11 +30,12 @@ def fetch_initiative_change(url: str):
     options.headless = True
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
-    with webdriver.Chrome(service=Service(ChromeDriverManager().install(), options=options)) as driver:
-        driver.get(url)
-        driver.implicitly_wait(10)
-        
-        initiatives = []
+
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    driver.get(url)
+    driver.implicitly_wait(10)
+    
+    initiatives = []
 
     try:
         objective_divs = driver.find_elements(By.CLASS_NAME, "corgi-1vlmmoi")
@@ -59,6 +60,7 @@ def fetch_initiative_change(url: str):
         return []
     finally:
         driver.quit()
+
 
 
 def fetch_descriptions_for_initiatives(initiatives: dict):
