@@ -10,8 +10,8 @@ import json
 def fetch_otakantaa():
     try:
         fetch_otakantaa_do_the_work()
-    except:
-        print("Error fetching Otakantaa data")
+    except Exception as e:
+        print(f"Error fetching Otakantaa data: {e}")
 
 def fetch_otakantaa_do_the_work():
     print("Fetching Otakantaa data")
