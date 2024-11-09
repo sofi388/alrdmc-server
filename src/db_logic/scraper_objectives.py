@@ -4,17 +4,13 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 def fetch_objective_from_url(url: str):
-    # Initialize the Selenium WebDriver
     options = webdriver.ChromeOptions()
-    options.headless = True  # Optional: run in headless mode (without opening a browser window)
-    
-    # Use WebDriver Manager to automatically manage the ChromeDriver installation
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    options.headless = True
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
 
-    # Open the URL
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager(version="130").install()), options=options)
     driver.get(url)
-    
-    # Allow time for page to load and execute JavaScript (if necessary)
     driver.implicitly_wait(10)
     
     try:

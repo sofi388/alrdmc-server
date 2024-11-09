@@ -10,8 +10,6 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
-
 def save_initiatives_to_db(titles, urls, vectors):#, objectives):
     """
     Saves title, initiative url and semantic vector of the title.

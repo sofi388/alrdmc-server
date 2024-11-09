@@ -1,6 +1,7 @@
 import mysql.connector
 import numpy as np
 import json
+import ast
 
 # Database connection configuration
 connection_config = {
@@ -11,25 +12,25 @@ connection_config = {
     'database': "alrdmc"
 }
 
-# Connect to the database and fetch all vector data
+def parse_float_list(string):
+    try:
+        return ast.literal_eval(string)
+    except Exception as e:
+        return f"Error parsing string: {e}"
+
 def fetch_all_vectors():
-    # Establish the connection
     connection = mysql.connector.connect(**connection_config)
     cursor = connection.cursor()
 
-    # SQL query to fetch all non-null vectors
     query = "SELECT vector_data FROM initiatives WHERE vector_data IS NOT NULL"
     cursor.execute(query)
     
-    # Initialize list to hold vectors
     vector_list = []
     
     for (vector_data,) in cursor.fetchall():
-        # Convert from JSON (or adjust if stored differently) to numpy array
-        vector = json.dumps(vector_data)
+        vector = parse_float_list(vector_data)
         vector_list.append(vector)
 
-    # Close database connection
     cursor.close()
     connection.close()
 
