@@ -7,8 +7,13 @@ import json
 
 
 # There's an RSS feed at https://www.otakantaa.fi/fi/rss/. We can use this to get the latest initiatives.
-
 def fetch_otakantaa():
+    try:
+        fetch_otakantaa_do_the_work()
+    except:
+        print("Error fetching Otakantaa data")
+
+def fetch_otakantaa_do_the_work():
     print("Fetching Otakantaa data")
     response = requests.get("https://www.otakantaa.fi/fi/rss/")
     # This is XML - we can use the `xml` module to parse it.
