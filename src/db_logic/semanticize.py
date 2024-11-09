@@ -2,9 +2,11 @@
 from transformers import AutoTokenizer, AutoModel
 
 tokenizer = AutoTokenizer.from_pretrained(
-    "Xenova/paraphrase-multilingual-MiniLM-L12-v2"
+    "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 )
-model = AutoModel.from_pretrained("Xenova/paraphrase-multilingual-MiniLM-L12-v2")
+model = AutoModel.from_pretrained(
+    "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+)
 
 
 def generate_semantic_vector(text: str):
