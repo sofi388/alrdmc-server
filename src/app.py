@@ -14,8 +14,8 @@ logger = logging.getLogger("flask.app")
 otakantaa_thread = threading.Thread(target=fetch_otakantaa, args=(logger,))
 otakantaa_thread.start()
 
-poller = threading.Thread(target=poller_euci, args=(logger,))
-poller.start()
+# poller = threading.Thread(target=poller_euci, args=(logger,))
+# poller.start()
 
 app = OpenAPI(__name__, info=info)
 @app.get("/semantic_vectors", summary=semantic_vector_summary, tags=[semantic_vector_tag])
