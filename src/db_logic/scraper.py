@@ -3,6 +3,7 @@ from config.config import EU_URL, KANSALAISALOITE_URL
 from db_logic.scraper_objectives import fetch_objective_from_url
 
 def fetch_kansalaisaloite():
+    
     return []
 
 def fetch_european_initiatives():

@@ -11,7 +11,7 @@ from db_logic.otakantaa_scraper import fetch_otakantaa
 
 logger = logging.getLogger("flask.app")
 
-otakantaa_thread = threading.Thread(target=fetch_otakantaa, args=(logger,))
+otakantaa_thread = threading.Thread(target=fetch_otakantaa)
 otakantaa_thread.start()
 
 # poller = threading.Thread(target=poller_euci, args=(logger,))
