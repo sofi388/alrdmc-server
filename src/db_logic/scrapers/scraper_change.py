@@ -28,38 +28,34 @@ def fetch_initiative_change(url: str):
     options.headless = True
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
+    with webdriver.Chrome(service=Service(ChromeDriverManager().install(), options=options)) as driver:
+        driver.get(url)
+        driver.implicitly_wait(10)
+        
+        initiatives = []
 
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-    driver.get(url)
-    driver.implicitly_wait(10)
-    
-    initiatives = []
+        try:
+            # Get all elements with the specified class
+            objective_divs = driver.find_elements(By.CLASS_NAME, "corgi-1vlmmoi")
 
-    try:
-        # Get all elements with the specified class
-        objective_divs = driver.find_elements(By.CLASS_NAME, "corgi-1vlmmoi")
+            for div in objective_divs:
+                title = div.text.strip()
 
-        for div in objective_divs:
-            title = div.text.strip()
+                # Find the closest parent or sibling anchor tag
+                parent = div.find_element(By.XPATH, "./ancestor::a")
+                url = parent.get_attribute("href") if parent else None
 
-            # Find the closest parent or sibling anchor tag
-            parent = div.find_element(By.XPATH, "./ancestor::a")
-            url = parent.get_attribute("href") if parent else None
+                # Only add entries with a valid URL and text
+                if title and url:
+                    initiatives.append({
+                        "title": title,
+                        "url": url
+                    })
+            return initiatives
+        except Exception as e:
+            print(f"Error extracting initiatives: {e}")
+            return []
 
-            # Only add entries with a valid URL and text
-            if title and url:
-                initiatives.append({
-                    "title": title,
-                    "url": url
-                })
-
-        return initiatives
-
-    except Exception as e:
-        print(f"Error extracting initiatives: {e}")
-        return []
-    finally:
-        driver.quit()
 
 
 

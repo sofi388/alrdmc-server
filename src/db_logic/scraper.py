@@ -4,10 +4,11 @@ from config.config import EU_URL, KANSALAISALOITE_URL
 from db_logic.scrapers.scraper_europe_initiatives import fetch_european_initiatives
 from db_logic.scrapers.scraper_kansalaisaloite import fetch_kansalaisaloite
 from db_logic.scrapers.scraper_otakantaa import fetch_otakantaa
+from db_logic.scrapers.scraper_change import fetch_initiative_change
 import concurrent.futures
 
 def scrape_all(logger):
-    scrapers = [fetch_otakantaa, fetch_kansalaisaloite, fetch_european_initiatives]
+    scrapers = []
     data = []
     with concurrent.futures.ThreadPoolExecutor() as executor:
         futures = {executor.submit(scraper): scraper.__name__ for scraper in scrapers}
