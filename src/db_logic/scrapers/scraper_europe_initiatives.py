@@ -1,9 +1,11 @@
+import requests
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
-from config.config import GOOGLE_DRIVER_LOC
+from config.config import GOOGLE_DRIVER_LOC, EU_URL
 
 def fetch_european_initiatives():
     objectives = fetch_objective_from_url(EU_URL)

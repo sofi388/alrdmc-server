@@ -32,27 +32,24 @@ def save_initiatives_to_db(titles, urls, descriptions, vectors):
 
 
 def poller(logger):
-    try:
-        data = scrape_all()
-    except:
-        logger.error(f"error scraping data. Continuing")
-        return
+    logger.info(f"polling for new initiatives")
+    data = scrape_all(logger)
 
     titles = []
     urls = []
     vectors = []
     descriptions = []
 
-    logger.info(f"starting to poll")
+    logger.info(f"starting to poll with {len(data)} initiatives")
     for item in data:
         titles.append(item['title'])
         urls.append(item['url'])
         descriptions.append(item['description'])
         vectors.append(json.dumps(generate_semantic_vector(item['title'] + item['description'])))
-
-    save_initiatives_to_db(titles, urls, descriptions, vectors)
-
     logger.info(f"got {len(data)} initiatives, pushing to db")
+    save_initiatives_to_db(titles, urls, descriptions, vectors)
+    logger.info(f"pushed {len(data)} initiatives to db")
+
 
 
 
