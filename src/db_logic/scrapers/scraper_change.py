@@ -36,10 +36,6 @@ def fetch_initiative_change(url: str):
         
         initiatives = []
 
-        try:
-            # Get all elements with the specified class
-            objective_divs = driver.find_elements(By.CLASS_NAME, "corgi-1vlmmoi")
-
     try:
         objective_divs = driver.find_elements(By.CLASS_NAME, "corgi-1vlmmoi")
 
