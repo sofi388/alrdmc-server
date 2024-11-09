@@ -11,35 +11,35 @@ def fetch_kansalaisaloite():
     options.headless = True
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--headless')  
 
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-    driver.get(KANSALAISALOITE_URL)
-    driver.implicitly_wait(10)
-    
-    try:
-        list_items = driver.find_elements(By.TAG_NAME, "li")
-        list_contents = [
-                    {
-                        "title": item.text.strip(), 
-                        "originalTitle": item.text.strip(),
-                        "url": item.find_element(By.TAG_NAME, "a").get_attribute("href"),
-                        "description": item.text.strip(),
-                        "originalDescription": item.text.strip(),
-                    }
-                for item in list_items if item.text.strip()]
+    with webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options) as driver:
+        driver.get(KANSALAISALOITE_URL)
+        driver.implicitly_wait(10)
+        
+        try:
+            list_items = driver.find_elements(By.TAG_NAME, "li")
+            list_contents = [
+                        {
+                            "title": item.text.strip(), 
+                            "originalTitle": item.text.strip(),
+                            "url": item.find_element(By.TAG_NAME, "a").get_attribute("href"),
+                            "description": item.text.strip(),
+                            "originalDescription": item.text.strip(),
+                        }
+                    for item in list_items if item.text.strip()]
 
-        if list_contents:
-            return list_contents
-        else:
-            print("No list items found")
+            if list_contents:
+                return list_contents
+            else:
+                print("No list items found")
+                return " "
+            if objective_text:
+                return objective_text
+            else:
+                print("Objective text not found")
+                return " "
+        except Exception as e:
+            print(f"Error extracting objective: {e}")
             return " "
-        if objective_text:
-            return objective_text
-        else:
-            print("Objective text not found")
-            return " "
-    except Exception as e:
-        print(f"Error extracting objective: {e}")
-        return " "
-    finally:
-        driver.quit()
+

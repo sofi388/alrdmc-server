@@ -30,13 +30,17 @@ def fetch_initiative_change(url: str):
     options.headless = True
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
+    with webdriver.Chrome(service=Service(ChromeDriverManager().install(), options=options)) as driver:
+        driver.get(url)
+        driver.implicitly_wait(10)
+        
+        initiatives = []
 
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-    driver.get(url)
-    driver.implicitly_wait(10)
-    
-    initiatives = []
+        try:
+            # Get all elements with the specified class
+            objective_divs = driver.find_elements(By.CLASS_NAME, "corgi-1vlmmoi")
 
+<<<<<<< HEAD
     try:
         objective_divs = driver.find_elements(By.CLASS_NAME, "corgi-1vlmmoi")
 
@@ -60,7 +64,25 @@ def fetch_initiative_change(url: str):
         return []
     finally:
         driver.quit()
+=======
+            for div in objective_divs:
+                title = div.text.strip()
 
+                # Find the closest parent or sibling anchor tag
+                parent = div.find_element(By.XPATH, "./ancestor::a")
+                url = parent.get_attribute("href") if parent else None
+>>>>>>> cf70a5609722d2b23116f095dd8dec7a985b9535
+
+                # Only add entries with a valid URL and text
+                if title and url:
+                    initiatives.append({
+                        "title": title,
+                        "url": url
+                    })
+            return initiatives
+        except Exception as e:
+            print(f"Error extracting initiatives: {e}")
+            return []
 
 
 def fetch_descriptions_for_initiatives(initiatives: dict):
@@ -92,6 +114,7 @@ def fetch_descriptions_for_initiatives(initiatives: dict):
 
     finally:
         driver.quit()
+<<<<<<< HEAD
 
 def fetch_change(urls=urls):
     res = []
@@ -109,3 +132,5 @@ def fetch_change(urls=urls):
 res = fetch_change()
 print(res)
 print(len(res))
+=======
+>>>>>>> cf70a5609722d2b23116f095dd8dec7a985b9535

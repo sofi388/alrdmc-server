@@ -34,22 +34,23 @@ def fetch_objective_from_url(url: str):
     options = webdriver.ChromeOptions()
     options.binary_location = GOOGLE_DRIVER_LOC
     options.headless = True
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--headless')  
 
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-    driver.get(url)
-    driver.implicitly_wait(10)
-    
-    try:
-        objective_div = driver.find_element(By.ID, "initiativeDetails")
-        objective_text = objective_div.text.strip()
+    with webdriver.Chrome(service=Service(ChromeDriverManager().install(), options=options)) as driver:
+        driver.get(url)
+        driver.implicitly_wait(10)
         
-        if objective_text:
-            return objective_text
-        else:
-            print("Objective text not found")
+        try:
+            objective_div = driver.find_element(By.ID, "initiativeDetails")
+            objective_text = objective_div.text.strip()
+            
+            if objective_text:
+                return objective_text
+            else:
+                print("Objective text not found")
+                return " "
+        except Exception as e:
+            print(f"Error extracting objective: {e}")
             return " "
-    except Exception as e:
-        print(f"Error extracting objective: {e}")
-        return " "
-    finally:
-        driver.quit()
