@@ -1,6 +1,5 @@
 from db_logic.scraper import scrape_all
 from db_logic.semanticize import generate_semantic_vector
-from db_logic.scrapers.scraper_europe_initiatives import fetch_objective_from_url
 import mysql.connector
 import json
 import logging
@@ -8,7 +7,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-def save_initiatives_to_db(titles, urls, descriptions,vectors):
+def save_initiatives_to_db(titles, urls, descriptions, vectors):
     """
     Saves title, initiative url and semantic vector of the title.
     """
@@ -49,9 +48,9 @@ def poller(logger):
         titles.append(item['title'])
         urls.append(item['url'])
         descriptions.append(item['description'])
-        vectors.append(json.dumps(generate_semantic_vector(item['title'])))
+        vectors.append(json.dumps(generate_semantic_vector(item['title'] + item['description'])))
 
-    save_initiatives_to_db(titles, urls, vectors)
+    save_initiatives_to_db(titles, urls, descriptions, vectors)
 
     logger.info(f"got {len(data)} initiatives, pushing to db")
 

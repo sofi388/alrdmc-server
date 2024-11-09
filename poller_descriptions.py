@@ -9,9 +9,9 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-def save_initiatives_to_db(titles, urls, vectors, objectives):
+def save_actionables_to_db(titles, urls, vectors, descriptions):
     """
-    Saves title, initiative url and semantic vector of the title.
+    Saves title, initiative url, description and semantic vector of the title.
     """
     connection = mysql.connector.connect(
         host="34.67.133.83",
@@ -25,11 +25,8 @@ def save_initiatives_to_db(titles, urls, vectors, objectives):
     
     query = "INSERT IGNORE INTO initiatives (title, initiative_url, vector_data, description) VALUES (%s, %s, %s, %s)"
     
-    # for title, url, vector in zip(titles, urls, vectors):
-    #    cursor.execute(query, (title, url, vector))
-
-    for title, url, vector, objective in zip(titles, urls, vectors, objectives):
-        cursor.execute(query, (title, url, vector, objective))
+    for title, url, vector, descrition in zip(titles, urls, vectors, descriptions):
+        cursor.execute(query, (title, url, vector, descrition))
     
     connection.commit()
     cursor.close()
@@ -42,16 +39,16 @@ def poller(logger):
     titles = []
     urls = []
     vectors = []
-    objectives = []
+    descriptions = []
 
     logger.info(f"starting to poll")
     for item in data:
         titles.append(item['title'])
         urls.append(item['url'])
         vectors.append(json.dumps(generate_semantic_vector(item['title'])))
-        objectives.append(fetch_objective_from_url(item['url']))
+        descriptions.append(item['description'])
 
-    save_initiatives_to_db(titles, urls, vectors, objectives)
+    save_initiatives_to_db(titles, urls, vectors, descriptions)
 
     logger.info(f"got {len(data)} initiatives, pushing to db")
 

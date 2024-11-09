@@ -18,8 +18,13 @@ def fetch_kansalaisaloite():
     
     try:
         list_items = driver.find_elements(By.TAG_NAME, "li")
-        list_contents = [item.text.strip() for item in list_items if item.text.strip()]
-        
+        list_contents = [
+                    {
+                        "title": item.text.strip(), 
+                        "url": item.find_element(By.TAG_NAME, "a").get_attribute("href"),
+                    }
+                for item in list_items if item.text.strip()]
+
         if list_contents:
             return list_contents
         else:

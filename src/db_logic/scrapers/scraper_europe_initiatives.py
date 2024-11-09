@@ -19,6 +19,7 @@ def fetch_european_initiatives():
         initiative_object = {
             "title": initiative["title"],
             "url": f"https://citizens-initiative.europa.eu/initiatives/details/{initiative['year']}/{initiative['number']}",
+            "description": fetch_objective_from_url(initiative["supportLink"])
         }
 
         return_data.append(initiative_object)
