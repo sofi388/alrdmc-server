@@ -1,5 +1,7 @@
 import requests
-from config.config import EU_URL, KANSALAISALOITE_URL
+# from config.config import EU_URL, KANSALAISALOITE_URL
+
+EU_URL =  "https://register.eci.ec.europa.eu/core/api/register/search/ALL/EN/0/20"
 
 def fetch_kansalaisaloite():
     return []
