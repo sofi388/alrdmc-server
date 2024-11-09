@@ -105,3 +105,7 @@ def fetch_change(urls=urls):
     res = list(unique_initiatives.values())
 
     return res
+
+res = fetch_change()
+print(res)
+print(len(res))
