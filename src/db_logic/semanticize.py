@@ -2,13 +2,18 @@
 from transformers import AutoTokenizer, AutoModel, pipeline
 import torch
 
+# Load the HF_TOKEN from the .env file
+from dotenv import load_dotenv
+import os
+load_dotenv()
+
 tokenizer = AutoTokenizer.from_pretrained(
     "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 )
 model = AutoModel.from_pretrained(
     "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 )
-pipeline_generation_keywords = pipeline("text-generation", model='meta-llama/Llama-3.2-1B-Instruct', torch_dtype=torch.bfloat16)
+pipeline_generation_keywords = pipeline("text-generation", model='meta-llama/Llama-3.2-1B-Instruct', torch_dtype=torch.bfloat16, token=os.getenv("HF_TOKEN"))
 
 
 def generate_semantic_vector(text: str):
@@ -16,10 +21,12 @@ def generate_semantic_vector(text: str):
     To use this function, you can just call it with any text and it will return the semantic vector for that text
     """
     # First, generate the keywords of the text
-    pipeline_generation_keywords("From the following text, extract a list of specific keywords related to the topic: " + text)
+    generated_keywords = pipeline_generation_keywords("From the following text, extract a list of specific keywords related to the topic: " + text, max_new_tokens=100)[0]["generated_text"]
+
+    print(f"Generated keywords: {generated_keywords}")
 
     inputs = tokenizer(
-        text, return_tensors="pt", padding=True, truncation=True, max_length=512
+        generated_keywords, return_tensors="pt", padding=True, truncation=True, max_length=512
     )
     outputs = model(**inputs)
     last_layer_states = outputs[0]
