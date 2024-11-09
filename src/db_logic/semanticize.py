@@ -31,7 +31,8 @@ def generate_semantic_vector(text: str):
     ]
     generated_keywords = pipeline_generation_keywords(chat_template, max_new_tokens=50)[0]["generated_text"][-1]['content']
 
-    print(f"Generated keywords: {generated_keywords}")
+    # print(f"Generated keywords: {generated_keywords}")
+    generated_keywords = text
 
     inputs = tokenizer(
         generated_keywords, return_tensors="pt", padding=True, truncation=True, max_length=512
