@@ -7,7 +7,6 @@ from transformers import AutoTokenizer, AutoModel, pipeline
 import torch
 
 
-
 tokenizer = AutoTokenizer.from_pretrained(
     "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 )
@@ -40,6 +39,5 @@ def generate_semantic_vector(text: str):
     )
     outputs = model(**inputs)
     last_layer_states = outputs[0]
-    # Sum and divide by the number of tokens
     pooled_output = last_layer_states.sum(axis=1).mul(1.0 / last_layer_states.shape[1])
     return pooled_output.squeeze().tolist()

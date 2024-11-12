@@ -15,10 +15,7 @@ def fetch_initiative_links_and_texts(url: str):
         driver.implicitly_wait(10)
         
         try:
-            # Get all elements with the specified class
             objective_divs = driver.find_elements(By.CLASS_NAME, "op__link--inherited-style")
-            
-            # Extract text and link from each element
             initiatives = [
                 {
                     "title": div.text.strip(),
@@ -30,10 +27,7 @@ def fetch_initiative_links_and_texts(url: str):
                 for div in objective_divs if div.text.strip() and div.get_attribute("href")
             ]
             
-            # Regular expression to match only Latin characters (letters, basic punctuation)
             latin_regex = re.compile(r'^[A-Za-z0-9\s\.,!?;:()"\'-]*$')
-            
-            # Filter only initiatives with Latin characters
             latin_initiatives = [
                 initiative for initiative in initiatives 
                 if latin_regex.match(initiative['text'])
@@ -49,8 +43,6 @@ def fetch_initiative_links_and_texts(url: str):
             return []
 
 
-res = fetch_initiative_links_and_texts('https://www.openpetition.eu/petitionen')
+if __name__ == "__main__":
+    print(fetch_initiative_links_and_texts('https://www.openpetition.eu/petitionen'))
 
-
-print(res)
-print(len(res))

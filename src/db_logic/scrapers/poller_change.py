@@ -1,10 +1,11 @@
 import mysql.connector
 import json
 import logging
-from scraper_european_parliament import fetch_parliament
 from scraper_change import fetch_change
 from semanticize import generate_semantic_vector
 import concurrent.futures
+from config.config import CHANGE_URLS
+from config.config import CONNECTION_CONFIG
 
 
 logging.basicConfig(level=logging.INFO)
@@ -16,13 +17,7 @@ def save_initiatives_to_db(titles, original_titles, urls, descriptions, original
     Saves titles, URLs, and semantic vectors to the database.
     """
     try:
-        connection = mysql.connector.connect(
-            host="34.67.133.83",
-            user="root",
-            port="3308",
-            password="pass",
-            database="alrdmc"
-        )
+        connection = CONNECTION_CONFIG
         cursor = connection.cursor()
         
         query = """
@@ -45,25 +40,9 @@ def save_initiatives_to_db(titles, original_titles, urls, descriptions, original
         cursor.close()
         connection.close()
 
-def poller(logger):
-    data = fetch_change([
-    "https://www.change.org/t/free-speech-en-us?source_location=homepage",
-    "https://www.change.org/t/entertainment-media-en-us?source_location=topic_page",
-    "https://www.change.org/t/technology-9?source_location=topic_page",
-    "https://www.change.org/t/video-games-online-gaming-en-us?source_location=topic_page",
-    "https://www.change.org/t/consumer-rights-en-us?source_location=topic_page",
-    "https://www.change.org/t/environmental-issues-en-us?source_location=topic_page",
-    "https://www.change.org/t/animal-rights-and-conservation-en-us?source_location=topic_page",
-    "https://www.change.org/t/business-and-economy-en-us?source_location=topic_page",
-    "https://www.change.org/t/corporate-responsibility-en-us?source_location=topic_page",
-    "https://www.change.org/t/free-speech-en-us?source_location=homepage"
-    "https://www.change.org/browse"
-    "https://www.change.org/t/entertainment-11?source_location=homepage"
-    "https://www.change.org/t/sports-12?source_location=topic_page"
-    "https://www.change.org/t/recreational-infrastructure-en-us?source_location=topic_page"
-    "https://www.change.org/browse/recent"
 
-    ]) 
+def poller(logger):
+    data = fetch_change(CHANGE_URLS) 
 
     titles, original_titles, urls, descriptions, original_descriptions, vectors = [], [], [], [], [], []
 
@@ -90,6 +69,7 @@ def poller(logger):
         save_initiatives_to_db(titles, original_titles, urls, descriptions, original_descriptions, vectors)
     else:
         logger.warning("No valid data to insert into the database.")
+
 
 if __name__ == "__main__":
     poller(logger)
